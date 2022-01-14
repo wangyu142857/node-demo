@@ -1,0 +1,11 @@
+node_modules
+package-lock.json
+yarn.lock
+
+# Editor directories and files
+.idea
+.vscode
+dist
+.DS_Store
+yarn-error.log
+.VSCodeCounter/

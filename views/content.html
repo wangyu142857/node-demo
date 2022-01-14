@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>目录</title>
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+
+<body>
+  <div id="app">
+    <div class="book-list">
+      <div class="item" v-for="(item, index) in list" :key="index" @click="jump(item)">
+        <span>{{item.name}}</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/vue.min.js"></script>
+  <script src="/js/axios.min.js"></script>
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        url: '',
+        list: []
+      },
+      mounted() {
+        this.url = this.getQueryString('url')
+        this.search();
+      },
+      methods: {
+        search() {
+          axios.get(`/getContent?url=${this.url}`).then(res => {
+            this.list = res.data;
+          })
+        },
+        jump(item) {
+          window.location.href = `/detail?url=${item.url}`
+        },
+        getQueryString(name) {
+          var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+          var r = window.location.search.substr(1).match(reg);
+          if (r != null) return unescape(r[2]);
+          return null;
+        },
+      }
+    })
+  </script>
+</body>
+
+</html>

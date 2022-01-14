@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+
+<body>
+  <div id="app">
+    <div class="search">
+      <input type="text" v-model="val"> <span class="btn" @click="search(1)">搜索</span>
+    </div>
+    <div class="book-list">
+      <div class="item" v-for="(item, index) in list" :key="index" @click="jump(item)">
+        <span>书名：{{item.name}}</span>
+        <br />
+        <span>{{item.auth}}</span>
+      </div>
+    </div>
+    <div class="page-list" v-if="pageCount > 1">
+      <span class="item" v-for="(item, index) in pageCount" :key="index" @click="search(item)">{{item}}</span>
+    </div>
+  </div>
+
+  <script src="/js/vue.min.js"></script>
+  <script src="/js/axios.min.js"></script>
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        val: '',
+        list: [],
+        pageCount: 1
+      },
+      methods: {
+        search(page) {
+          let url = `/search?name=${this.val}`;
+          if (page > 1) {
+            url += `&page=${page}`
+          }
+          axios.get(url).then(res => {
+            this.list = res.data.content;
+            this.pageCount = res.data.pageCount
+          })
+        },
+        jump(item) {
+          window.location.href = `/content?url=${item.url}`
+        }
+      },
+    })
+  </script>
+</body>
+
+</html>

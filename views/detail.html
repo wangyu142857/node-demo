@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>详情</title>
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+
+<body>
+  <div id="app">
+    <h3>{{title}}</h3>
+    <p class="content" v-html="val"></p>
+    <div class="bottom-btns">
+      <span @click="jump('prev')">上一章</span>
+      <span @click="returnContent()">目录</span>
+      <span @click="jump('next')">下一章</span>
+    </div>
+  </div>
+
+  <script src="/js/vue.min.js"></script>
+  <script src="/js/axios.min.js"></script>
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        val: '',
+        prev: '',
+        next: '',
+        title: '',
+        content: '',
+        list: []
+      },
+      mounted() {
+        this.url = this.getQueryString('url');
+        this.search();
+      },
+      methods: {
+        search() {
+          axios.get(`/getDetail?url=${this.url}`).then(res => {
+            const { val, prev, next, title, content } = res.data;
+            this.val = val;
+            this.prev = prev;
+            this.next = next;
+            this.title = title;
+            this.content = content;
+          })
+        },
+        jump(type) {
+          const url = type === 'prev' ? this.prev : this.next
+          if ((type === 'prev' && url === this.content) || (type === 'next' && url === this.content)) {
+            window.location.href = `/content?url=${this.content}`
+          } else {
+            window.location.href = `/detail?url=${url}`
+          }
+          // 
+        },
+        returnContent() {
+          window.location.href = `/content?url=${this.content}`
+        },
+        getQueryString(name) {
+          var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+          var r = window.location.search.substr(1).match(reg);
+          if (r != null) return unescape(r[2]);
+          return null;
+        },
+      }
+    })
+  </script>
+</body>
+
+</html>

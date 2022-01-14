@@ -1,0 +1,82 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+* {
+  box-sizing: border-box;
+}
+#app {
+  position: relative;
+  padding-bottom: 40px;
+  padding: 5px;
+  background: #f6f4ec;
+  color: #000;
+  font: 14px "Helvetica Neue", Helvetica, "Lucida Grande", "Luxi Sans", Arial, "PingFang SC", "Microsoft YaHei";
+}
+.search {
+  display: flex;
+}
+.search input {
+  height: 40px;
+  line-height: 40px;
+  border: 1px solid #0089ff;
+  padding: 0 10px;
+  outline: none;
+}
+.search input:focus {
+  border: 1px solid #0d79d3;
+}
+.search .btn {
+  width: 60px;
+  height: 40px;
+  background: #0089ff;
+  color: #fff;
+  text-align: center;
+  line-height: 40px;
+  cursor: pointer;
+}
+.search .btn:hover {
+  background: #0d79d3;
+}
+.bottom-btns {
+  width: 100%;
+  padding: 5px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px;
+  margin-top: 20px;
+}
+.bottom-btns span {
+  color: #0089ff;
+  flex: 1;
+  text-align: center;
+}
+
+.book-list .item {
+  padding: 5px 10px;
+}
+
+.content {
+  font-size: 1rem;
+}
+
+.page-list {
+  width: 100%;
+  padding: 5px 20px;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  margin-top: 20px;
+}
+.page-list .item {
+  cursor: pointer;
+  padding: 5px 10px;
+  background: #ccc;
+  margin-right: 3px;
+}
+
+.page-list .item.current {
+  background: #499de8;
+}
